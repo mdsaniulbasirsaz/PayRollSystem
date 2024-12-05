@@ -1,0 +1,73 @@
+﻿@model PayRollSystem.Models.Employee
+
+@{
+    ViewData["Title"] = "Create Employee";
+}
+
+<h1 class="text-center my-5 text-white fw-bold">Add New Employee</h1>
+
+<div class="container">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h4 class="card-title mb-0 text-center">Employee Information</h4>
+        </div>
+        <div class="card-body">
+            <form method="post" class="needs-validation" novalidate>
+                @Html.AntiForgeryToken()
+
+                <div class="form-group mb-4">
+                    <label for="FirstName" class="font-weight-bold">First Name</label>
+                    <input type="text" class="form-control form-control-lg" id="FirstName" name="FirstName" placeholder="Enter first name" required>
+                    <div class="invalid-feedback">Please enter a first name.</div>
+                </div>
+
+                <div class="form-group mb-4">
+                    <label for="LastName" class="font-weight-bold">Last Name</label>
+                    <input type="text" class="form-control form-control-lg" id="LastName" name="LastName" placeholder="Enter last name" required>
+                    <div class="invalid-feedback">Please enter a last name.</div>
+                </div>
+
+                <div class="form-group mb-4">
+                    <label for="Position" class="font-weight-bold">Position</label>
+                    <input type="text" class="form-control form-control-lg" id="Position" name="Position" placeholder="Enter position" required>
+                    <div class="invalid-feedback">Please enter a position.</div>
+                </div>
+
+                <div class="form-group mb-4">
+                    <label for="Salary" class="font-weight-bold">Salary</label>
+                    <input type="number" class="form-control form-control-lg" id="Salary" name="Salary" placeholder="Enter salary" required>
+                    <div class="invalid-feedback">Please enter a salary.</div>
+                </div>
+
+                <div class="form-group mb-4">
+                    <label for="DateOfJoining" class="font-weight-bold">Date of Joining</label>
+                    <input type="date" class="form-control form-control-lg" id="DateOfJoining" name="DateOfJoining" required>
+                    <div class="invalid-feedback">Please enter a date of joining.</div>
+                </div>
+
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-success btn-lg px-4 py-2 mt-3">Add Employee</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Form validation (Bootstrap 4)
+    (function () {
+        'use strict'
+        window.addEventListener('load', function () {
+            var forms = document.getElementsByClassName('needs-validation')
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        }, false)
+    })()
+</script>

@@ -1,0 +1,16 @@
+﻿@model PayRollSystem.Models.Employee
+
+<h1>Delete Employee</h1>
+
+<div class="alert alert-warning">
+    <h3>Are you sure you want to delete this employee?</h3>
+    <p><strong>@Model.FirstName @Model.LastName</strong></p>
+    <p>Position: @Model.Position</p>
+    <p>Salary: @Model.Salary</p>
+    <p>Date of Joining: @Model.DateOfJoining.ToShortDateString()</p>
+</div>
+
+<form method="post" asp-action="Delete" asp-route-id="@Model.EmployeeId">
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a href="@Url.Action("Index", "Employee")" class="btn btn-secondary">Cancel</a>
+</form>
