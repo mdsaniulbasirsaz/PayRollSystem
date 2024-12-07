@@ -39,43 +39,53 @@ namespace PayRollSystem.Controllers
 			}
 			return View(employee);
 		}
-		// GET: Employee/Edit/{id}
-		public IActionResult Edit(int id)
+		// GET: Employee/Edit/5
+		public async Task<IActionResult> Edit(int id)
 		{
-			var employee = _context.Employees.FirstOrDefault(e => e.EmployeeId == id);
+			var employee = await _context.Employees.FindAsync(id);
 			if (employee == null)
 			{
 				return NotFound();
 			}
-
-			return View(employee);  // Display the edit page with employee details
+			return View(employee);
 		}
 
-		// POST: Employee/Edit/{id}
+		// POST: Employee/Edit/5 (Handles regular POST request)
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public IActionResult Edit(int id, [Bind("EmployeeId, FirstName, LastName, Position, Salary, DateOfJoining")] Employee employee)
+		public async Task<IActionResult> Edit(Employee employee)
 		{
-			if (id != employee.EmployeeId)
-			{
-				return NotFound();
-			}
-
 			if (ModelState.IsValid)
 			{
-				try
-				{
-					_context.Update(employee);
-					_context.SaveChanges();
-				}
-				catch
-				{
-					return View(employee); // Handle exceptions appropriately
-				}
-				return RedirectToAction(nameof(Index));  // After saving, redirect back to the list page
+				_context.Update(employee);
+				await _context.SaveChangesAsync();
+				return RedirectToAction(nameof(Index)); // After edit, redirect to employee list
 			}
-			return View(employee);  // Return to the edit page if validation fails
+			return View(employee);
 		}
+
+		// POST: Employee/Edit (AJAX endpoint for modal)
+		[HttpPost]
+		public async Task<IActionResult> EditEmployee(Employee employee)
+		{
+			if (ModelState.IsValid)
+			{
+				// Update the employee record in the database
+				_context.Update(employee);
+				await _context.SaveChangesAsync();
+
+				// Return success response in JSON format
+				return Json(new { success = true, message = "Employee updated successfully!" });
+			}
+
+			// Return error response in case of failure
+			return Json(new { success = false, message = "There was an error updating the employee." });
+		}
+
+
+
+
+
 
 		// GET: Employee/Delete/{id}
 		public IActionResult Delete(int id)
@@ -102,6 +112,7 @@ namespace PayRollSystem.Controllers
 			}
 			return RedirectToAction(nameof(Index));  // After deletion, redirect back to the list page
 		}
+
 
 	}
 }

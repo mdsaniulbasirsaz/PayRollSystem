@@ -31,5 +31,18 @@ namespace PayRollSystem.Models
 		[Required]
 		[DataType(DataType.Date)]
 		public DateTime DateOfJoining { get; set; }
+
+		[Required]
+		[Phone]
+		[StringLength(15)]
+		public string MobileNumber { get; set; } // Added MobileNumber
+
+		[Required]
+		[StringLength(200)]
+		public string Address { get; set; } // Added Address
+
+		[Required]
+		[Range(0, double.MaxValue)]
+		public decimal HourlyRate { get; set; } // Added HourlyRate
 	}
 }
